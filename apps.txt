@@ -1,0 +1,11 @@
+# atelier app roster — one repo slug per line.
+# Single source of truth for ./clone.sh and ./run.sh discovery.
+# Each is cloned from git@github.com:${GH_OWNER:-akira-toriyama}/<name>.git
+# (sill has no run.sh — it's the shared theming library, not a daemon.)
+chord
+facet
+glance
+halo
+perch
+sill
+wand

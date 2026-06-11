@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+
+# Apps — each is an independent GitHub repo, cloned in place by ./clone.sh.
+# atelier tracks only the framework (scripts + docs), never the app sources.
+# Keep this list in sync with apps.txt.
+/chord/
+/facet/
+/glance/
+/halo/
+/perch/
+/sill/
+/wand/
