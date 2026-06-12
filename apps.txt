@@ -6,6 +6,7 @@ chord
 facet
 glance
 halo
+jig
 perch
 sill
 wand

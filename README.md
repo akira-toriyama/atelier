@@ -15,6 +15,7 @@ run / stop のオーケストレーションだけ**を担う。実体は1か所
 | [facet](https://github.com/akira-toriyama/facet) | ワークスペース / ウィンドウ マネージャ | ✓ |
 | [glance](https://github.com/akira-toriyama/glance) | stdin を非アクティブ NSPanel に表示する one-shot CLI | ✓ |
 | [halo](https://github.com/akira-toriyama/halo) | アクティブウィンドウのネオンリング | ✓ |
+| [jig](https://github.com/akira-toriyama/jig) | jq 互換 JSON プロセッサ CLI（humane errors） | ✓ |
 | [perch](https://github.com/akira-toriyama/perch) | キーボード駆動 UI ナビゲータ（hint mode） | ✓ |
 | [sill](https://github.com/akira-toriyama/sill) | 共有テーマ基盤（Palette / PaletteKit / Effects） | — (library) |
 | [wand](https://github.com/akira-toriyama/wand) | カーソル基準のマウス自動化（cast / tome） | ✓ |
