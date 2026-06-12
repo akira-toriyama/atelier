@@ -94,9 +94,18 @@ consumer の dedup には sill 側の小追加が先に要る。
 
 ### Track 3 — meta 共通化（並走・glance 非依存・高ROI）
 土台（org `akira-toriyama/.github` の reusable workflow）は既存。taplo/glossary は利用済み。
-- [ ] **CI reusable 拡張**: `commit-lint`（移行4 app で byte-identical → 最易）→ `update-tap`
-      （input=formula 名）→ `build`（input=run-tests bool）。`release` は最大・非一様で**最後・部分的**。
-      glance を taplo/commit-lint の thin-caller に載せる。
+- [ ] **commit-lint reusable 化**（5 repo: facet/halo/glance/chord/perch）: 各 repo の
+      `commit-lint.yml` を thin caller（`uses: akira-toriyama/.github/.github/workflows/commit-lint.yml@main`）
+      に。**ブランチ `ci/reusable-commit-lint` で 4本 PR 済**（facet#196/halo#11/glance#13/chord#74、
+      checks green）＋ perch は PR 未作成（ブランチ push 済）。
+      ⚠️ **gotcha（2026-06-12 判明）**: 委任すると lint チェック名が `lint`→**`lint / lint`** に変わる。
+      保護ありの repo（facet/chord/perch/wand が必須 `["build","lint"]`）は必須 `lint` 不一致で
+      **green でも BLOCKED**。→ **決定 Option A**: facet/chord/perch の必須から `lint` を外し
+      `build` のみ残す（commit-lint は走るが merge ゲートにしない＝過剰制限の解消）。halo/glance/sill は
+      **無保護のまま据え置き**（不揃いは別件の掃除、今回スコープ外）。wand は本バッチ対象外
+      （commit-lint PR 未着手。将来 wand を委任する時に同じ Option A を適用）。
+- [ ] **CI reusable 拡張**（commit-lint の後）: `update-tap`（input=formula 名）→ `build`
+      （input=run-tests bool）。`release` は最大・非一様で**最後・部分的**。
 - [ ] **CLAUDE.md**: 5 app で **byte-identical な "Roadmap board" 9行ブロック**を
       `atelier/docs/roadmap-board.md` に集約。各 CLAUDE.md は短いポインタ＋URL に。残りは app 固有で維持。
 - [ ] ~~**root scripts** 共通化~~ → **見送り**（マンデート「zero-debt ≠ 全部共有」）。70-90% 同一だが
