@@ -1,6 +1,7 @@
 #!/bin/zsh
-# Run atelier apps — delegates to each app's own run.sh (build + launch).
-# Apps are independent repos cloned by ./clone.sh; this just orchestrates.
+# Run atelier apps — delegates to each app's own run.sh in its ghq checkout.
+# Apps are independent repos fetched by ./clone.sh into the ghq tree; this
+# just orchestrates.
 #
 #   ./run.sh                 run every app in the background (bulk)
 #                            logs → /tmp/atelier-<app>.run.log
@@ -9,18 +10,13 @@
 #
 set -e
 cd "$(dirname "$0")"
+source ./lib.sh
+load_roster
 
-# roster from apps.txt (strip comments / blanks)
-typeset -a ROSTER
-while IFS= read -r line; do
-  line="${line%%#*}"; line="${line//[[:space:]]/}"
-  [[ -n "$line" ]] && ROSTER+=("$line")
-done < apps.txt
-
-# which apps actually ship a run.sh
+# which apps actually ship a run.sh (in their ghq checkout)
 typeset -a RUNNABLE
 for app in $ROSTER; do
-  [[ -f "$app/run.sh" ]] && RUNNABLE+=("$app")
+  [[ -f "$(app_dir "$app")/run.sh" ]] && RUNNABLE+=("$app")
 done
 
 if [[ "${1:-}" == "--list" || "${1:-}" == "-l" ]]; then
@@ -31,9 +27,10 @@ fi
 # no args (or --all) → bulk launch every runnable app in the background
 if [[ $# -eq 0 || "${1:-}" == "--all" ]]; then
   for app in $RUNNABLE; do
+    dir="$(app_dir "$app")"
     log="/tmp/atelier-$app.run.log"
     echo "▶ $app → $log"
-    ( cd "$app" && exec ./run.sh ) >"$log" 2>&1 &
+    ( cd "$dir" && exec ./run.sh ) >"$log" 2>&1 &
   done
   echo "launched ${#RUNNABLE} app(s) in the background."
   exit 0
@@ -41,11 +38,12 @@ fi
 
 # single app → foreground, pass args straight through to its run.sh
 app="$1"; shift
-if [[ ! -d "$app" ]]; then
+dir="$(app_dir "$app")"
+if ! app_cloned "$app"; then
   echo "run.sh: '$app' not cloned — run ./clone.sh first" >&2; exit 2
 fi
-if [[ ! -f "$app/run.sh" ]]; then
+if [[ ! -f "$dir/run.sh" ]]; then
   echo "run.sh: '$app' has no run.sh (library or non-daemon app)" >&2; exit 2
 fi
-echo "▶ $app/run.sh $*"
-exec "./$app/run.sh" "$@"
+echo "▶ $app run.sh $*"
+exec "$dir/run.sh" "$@"
