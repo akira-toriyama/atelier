@@ -6,8 +6,10 @@ drift-free な family 一貫性を作る横断リファクタの**正典 tracker
 
 **北極星** = 「facet の theme を真似て」を二度と言わない。
 
-> このファイルが計画＋進捗の単一の正典。セッションを跨ぐバトンはここで受け渡す。
-> 旧 `perch/docs/atelier.md`（wishlist）と Desktop の進捗メモはこれに統合・破棄。
+> **このファイル = phase 1.5 以降の計画**（バトンはここで受け渡す）。phase 1 / glance の
+> 引き継ぎ・push ritual・権威状態は [`sill-migration-handoff.md`](sill-migration-handoff.md)
+> が正本（過去＝handoff / 未来＝refactor の役割分担・重複なし）。
+> 旧 `perch/docs/atelier.md`（wishlist）と Desktop メモはこれに統合・破棄済。
 
 ## 置き場の決定（不変方針）
 
@@ -73,6 +75,8 @@ consumer の dedup には sill 側の小追加が先に要る。
       `canonicalLinePetNames` で検証＋clamp-and-log に揃える。
 - [ ] **facet effect-name dedup**（Track 1 の pure リスト消費）。
 - [ ] **halo 色変換 dedup**（Track 1 の bridge 消費）。
+- [ ] **config キー命名の統一**: facet `cycle-seconds` vs wand `color-cycle-ms` 等、family 横断の
+      不揃いを揃える（handoff §3 block-9）。
 - **死守（dedup しない意図的ローカル）**: perch `[overlay].accent` / frosted-pill 透過処理 /
   独自 `system` spec / pill・effect 語彙。facet の layout・animation-curve 語彙（window-manager
   ドメイン）。wand arcade/burst/decal。halo の ring/border 描画（30Hz timer・breathing・flash）。
@@ -84,9 +88,9 @@ consumer の dedup には sill 側の小追加が先に要る。
       glance を taplo/commit-lint の thin-caller に載せる。
 - [ ] **CLAUDE.md**: 5 app で **byte-identical な "Roadmap board" 9行ブロック**を
       `atelier/docs/roadmap-board.md` に集約。各 CLAUDE.md は短いポインタ＋URL に。残りは app 固有で維持。
-- [ ] **root scripts**（run/stop/package/install-cli/setup-signing-cert）: 70-90% 同一・名前/コメント
-      drift。共通部を atelier の共有 helper＋thin wrapper（APP_NAME/BUNDLE_ID）に。**後回し**（払い小）。
-      注: atelier 既存の run/stop/lib（family orchestration）と**役割が別**なので名前衝突に注意。
+- [ ] ~~**root scripts** 共通化~~ → **見送り**（マンデート「zero-debt ≠ 全部共有」）。70-90% 同一だが
+      load-bearing な差（app 名 / bundle id / 署名 flag）が per-app で、thin wrapper の強制共有は
+      bad-abstraction 化＋払い小。drift が痛くなったら再考。
 
 ### Track 4 — block-10: 仕上げ（glance 出荷後）
 - [ ] FacetCore 最終 dedup（FacetConfig の手維持 name-list を Track 1 の pure リストへ）。
@@ -102,7 +106,9 @@ consumer の dedup には sill 側の小追加が先に要る。
 - **opt-in 収束**: 純粋な仕組み（canonical/suggest・canonicalLinePetNames・pet 警告）は family 全採用。
   見た目/依存が変わる物（perch `perchPillAlpha`、halo `EffectIntensity`）は**既定ローカル維持**、明示採用のみ。
 - **border 共通化**: phase 2 parking。
-- **バトン**: 本ファイルが正典。GitHub Projects #5（roadmap）＋ atelier issue で管理。
+- **doc 役割分担**: `sill-migration-handoff.md` = phase 1 / glance / push ritual（正本）、本ファイル = phase 1.5+。両者は補完・削除しない。
+- **scope guardrail（マンデート）**: 「zero-debt ≠ 全部共有」。Track 3 は **CI reusable ＋ CLAUDE.md のみ**（実重複）、**scripts 共通化は見送り**。TOML は同一 concern の正当 dedup として 1.6 で慎重に。
+- **バトン**: GitHub Projects #5（roadmap）＋ atelier issue で管理。
 
 ## 視覚差 watch list（review 必須）
 - perch 0.3→0.5: bestForeground が WCAG 判定に変更（0.4.0）→ 中輝度 primary で onPrimary ink が反転し得る。
