@@ -22,13 +22,18 @@ Homebrew 配布。**sill** が family の共有テーマライブラリ。
 
 ## Usage
 
-一括 (bulk) がデフォルト。`clone` / `run` / `stop` の3点で family 全体を操作する。
+一括 (bulk) がデフォルト。`clone` / `pull` / `run` / `stop` で family 全体を操作する。
 
 ```sh
 # clone — 全アプリを GitHub から取得
 ./clone.sh              # 足りないものだけ clone（一括）
 ./clone.sh --update     # 既存 clone も git pull --ff-only
 ./clone.sh --https      # SSH ではなく HTTPS で clone
+
+# pull — 各 clone を git pull --ff-only
+./pull.sh               # 全 clone 済みアプリを一括 pull
+./pull.sh perch         # 単体 pull
+./pull.sh --list        # clone 済みアプリ一覧
 
 # run — 各アプリの run.sh に委譲
 ./run.sh                # 全アプリをバックグラウンド一括起動（→ /tmp/atelier-<app>.run.log）
