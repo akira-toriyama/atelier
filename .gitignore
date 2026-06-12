@@ -1,9 +1,10 @@
 # macOS
 .DS_Store
 
-# Apps — each is an independent GitHub repo, cloned in place by ./clone.sh.
-# atelier tracks only the framework (scripts + docs), never the app sources.
-# Keep this list in sync with apps.txt.
+# Legacy in-tree app checkouts. The ghq-native scripts keep app sources in the
+# ghq tree ($(ghq root)/github.com/<owner>/<app>), NOT here — but an older
+# clone.sh run may have left per-app subdirs. Ignored so a stale copy never
+# dirties git status. Safe to delete once nothing local is uncommitted.
 /chord/
 /facet/
 /glance/

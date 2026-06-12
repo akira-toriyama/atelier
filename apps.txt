@@ -1,6 +1,6 @@
 # atelier app roster — one repo slug per line.
-# Single source of truth for ./clone.sh and ./run.sh discovery.
-# Each is cloned from git@github.com:${GH_OWNER:-akira-toriyama}/<name>.git
+# Single source of truth for ./clone.sh / ./run.sh / ./stop.sh / ./pull.sh.
+# Each is fetched via `ghq get` into $(ghq root)/github.com/${GH_OWNER:-akira-toriyama}/<name>.
 # (sill has no run.sh — it's the shared theming library, not a daemon.)
 chord
 facet
