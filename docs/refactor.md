@@ -6,6 +6,11 @@ drift-free な family 一貫性を作る横断リファクタの**正典 tracker
 
 **北極星** = 「facet の theme を真似て」を二度と言わない。
 
+**目標（2026-06-12 追加）**: **config.toml も family で一貫性が欲しい** — キー命名・語彙・
+構造が app を跨いで揃っている状態。専用 workstream は立てず、Track 2 の**キー命名統一**＋
+phase 1.6 の **TOML parser 共通化**の積み上げで**結果的にそうなる**のが理想形
+（揃えるのは共通 concern のみ。app ドメイン固有の語彙＝死守リストは対象外）。
+
 > **このファイル = 唯一の正典 tracker**（バトンはここで受け渡す）。phase 1（theme→sill
 > 移行・glance 含む）の経緯は git 履歴と各 merged PR が記録。旧 `sill-migration-handoff.md`
 > は phase 1 出荷完了をもって**退役・削除済**（2026-06-12）— 生きた ritual / 不変条件は
@@ -81,7 +86,7 @@ consumer の dedup には sill 側の小追加が先に要る。
 - [ ] **facet effect-name dedup**（Track 1 の pure リスト消費）。
 - [ ] **halo 色変換 dedup**（Track 1 の bridge 消費）。
 - [ ] **config キー命名の統一**: facet `cycle-seconds` vs wand `color-cycle-ms` 等、family 横断の
-      不揃いを揃える（handoff §3 block-9）。
+      不揃いを揃える（冒頭の目標「config.toml の一貫性」の第一歩）。
 - **死守（dedup しない意図的ローカル）**: perch `[overlay].accent` / frosted-pill 透過処理 /
   独自 `system` spec / pill・effect 語彙。facet の layout・animation-curve 語彙（window-manager
   ドメイン）。wand arcade/burst/decal。halo の ring/border 描画（30Hz timer・breathing・flash）。
