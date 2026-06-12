@@ -168,7 +168,11 @@ Track 1〜4 でもそのまま使う durable な運用知識。
   phase 1.6 の共通 parser / 各 app config 整形の設計基準にする。
 - **バトン**: GitHub Projects #5（roadmap）＋ atelier issue で管理。
 
-## 視覚差 watch list（review 必須）
+## 視覚差 watch list（self-verify でマージ・2026-06-12）
+**運用（トミー決定 A）**: watch list 項目は Claude が**実機で該当 app を起動 → スクショで
+before/after を確認 → PR に貼付**。明らかな破綻が無ければ**そのままマージ**（人間の verify
+待ちで止めない）。微妙な見た目の好みだけ事後にトミーへ共有し、必要なら追い PR で調整。
+実機 config を触る場合は §運用 ritual の「ユーザ live config 上書き ritual」（要バックアップ）に従う。
 - perch 0.3→0.5: bestForeground が WCAG 判定に変更（0.4.0）→ 中輝度 primary で onPrimary ink が反転し得る。
 - wand line-pets: 速度/chaseGap の微差。
 - （任意採用時）perch suggestedPillAlpha: フラット 0.85/0.30 → sill の連続カーブで pill 透過が変わる。
@@ -177,5 +181,6 @@ Track 1〜4 でもそのまま使う durable な運用知識。
 1. ダッシュボードで Phase 1.5 の未チェック Track を確認。
 2. **Track 0（pin）→ 1（sill 0.6）→ 2** の順。**Track 3（meta）は独立に着手可**。
 3. sill を変える Track 1 は **sill 0.6 を切ってから** consumer 採用（Track 2）。
-4. 視覚差 watch list の項目は PR に before/after を残す。
+4. 視覚差 watch list の項目は Claude が self-verify（スクショ before/after を PR に貼付）して
+   マージ。人間 verify 待ちでは止めない（§視覚差 watch list）。
 5. glance 出荷を確認してから Track 4。
