@@ -6,10 +6,11 @@ drift-free な family 一貫性を作る横断リファクタの**正典 tracker
 
 **北極星** = 「facet の theme を真似て」を二度と言わない。
 
-> **このファイル = phase 1.5 以降の計画**（バトンはここで受け渡す）。phase 1 / glance の
-> 引き継ぎ・push ritual・権威状態は [`sill-migration-handoff.md`](sill-migration-handoff.md)
-> が正本（過去＝handoff / 未来＝refactor の役割分担・重複なし）。
-> 旧 `perch/docs/atelier.md`（wishlist）と Desktop メモはこれに統合・破棄済。
+> **このファイル = 唯一の正典 tracker**（バトンはここで受け渡す）。phase 1（theme→sill
+> 移行・glance 含む）の経緯は git 履歴と各 merged PR が記録。旧 `sill-migration-handoff.md`
+> は phase 1 出荷完了をもって**退役・削除済**（2026-06-12）— 生きた ritual / 不変条件は
+> 下の「[運用 ritual / 不変条件](#運用-ritual--不変条件全-track-共通)」に統合。
+> 旧 `perch/docs/atelier.md`（wishlist）と Desktop メモもこれに統合・破棄済。
 
 ## 置き場の決定（不変方針）
 
@@ -32,9 +33,10 @@ drift-free な family 一貫性を作る横断リファクタの**正典 tracker
 sill 現況: タグ 0.5.0。Palette（pure）/ PaletteKit（AppKit）/ Effects（pure＋AppKit
 animator・LinePet）/ still。EffectIntensity は 0.4.0、LinePet は 0.5.0 で着地。
 
-各 app の sill 採用（origin/main）: facet `0.5.0` / halo `0.5.0` / glance `0.5.0` ✅、
-**perch `0.3.0`**（[perch#114](https://github.com/akira-toriyama/perch/pull/114) で 0.5.0・host verify 待ち）/
-**wand `0.4.0`**（Track 2 の line-pets dedup と同時に bump）。← Track 0 の対象。
+各 app の sill 採用（origin/main）: facet `0.5.0` / halo `0.5.0` / glance `0.5.0` /
+**perch `0.5.0`**（[perch#114](https://github.com/akira-toriyama/perch/pull/114) merged ✅・
+視覚差 watch list の host verify は残）/ **wand `0.4.0`**（Track 2 の line-pets dedup と
+同時に bump）。← Track 0 の残りは wand のみ。
 
 ## Phase 1.5 計画
 
@@ -42,11 +44,10 @@ glance 出荷で phase 1 完了。**Track 4 のゲートは外れた**（family 
 依存順: **Track 0 → 1 → 2**、**Track 3（meta）は最初から並走**。
 
 ### Track 0 — pin 衛生（最優先・rollout を解錠）
-- [ ] **perch**: `Package.swift` の `.upToNextMinor(from: "0.3.0")` を **`"0.5.0"` へ**。
-      現状 0.3.x で頭打ち＋`Package.resolved` が**タグでない pre-release commit**
-      （`0a2922f` = 0.1.0-6-g…）を指す＝未リリース snapshot ビルド。実タグ 0.5.0 へ
-      再解決。stale コメント（"0.3.x Phase V"）も更新。⚠ bump で **bestForeground
-      の判定が変わる**ため hint pill onPrimary に視覚差 → 要 review。
+- [x] **perch**: `.upToNextMinor(from: "0.3.0")` → **`"0.5.0"`** ✅
+      （[#114](https://github.com/akira-toriyama/perch/pull/114) merged。pre-release
+      commit pin も実タグ 0.5.0 へ再解決済）。⚠ bestForeground の WCAG 化で hint pill
+      onPrimary に視覚差があり得る → **host verify のみ残**（watch list 参照）。
 - [ ] **wand**: `0.4.0` → `0.5.0` bump（line-pets dedup を解錠）。stale コメント更新。
 - facet / halo は既に 0.5.0・クリーン（作業なし）。
 
@@ -102,6 +103,35 @@ consumer の dedup には sill 側の小追加が先に要る。
 - [ ] stale コメント一掃（perch/wand の Package.swift 等）、各 app の sill-seam doc 更新。
 - [ ] **最終 family review**: 全 app が 0.5.0+・hand-copy theme/effect/pet ゼロ・drift 面消滅を確認。
 
+## 運用 ritual / 不変条件（全 Track 共通）
+
+旧 `sill-migration-handoff.md` §4 から統合（2026-06-12）。phase 1 で確立し、
+Track 1〜4 でもそのまま使う durable な運用知識。
+
+- **マンデート（durable・トミー明示）**: sill の theme を基準に・相性悪いのは破棄で OK・
+  個性よりアプリ全般の一貫性・一通りリファクタ終わったら見直し・破壊的変更/破棄 OK・
+  負債 0。⚠️ ただし **zero-debt ≠ 全部共有**（強制共有＝bad abstraction＝別種の負債）。
+- **sill モジュール構成**（0.5.0 時点。Track 1 で名前リスト群と `LinePet` が
+  Palette へ移動・Effects は re-export に — 0.6 出荷時に本欄を更新）:
+  - `Palette`（pure / Sendable / Foundation-only）= `ThemeSpec`・12 preset + `system`・
+    `paletteFor` / `canonical` / `suggest`・`EffectIntensity`・`HexColor`。
+  - `PaletteKit`（AppKit / `@MainActor`）= `resolve(_:)`・`ResolvedPalette`・`pal` var・
+    `NSColor(hex:)`・`ink(tier,of:root)`・`onPrimary`・derive recipe。
+  - `Effects`（pure + AppKit-gated）= `EffectSpec`（neon/cyber/vapor/kawaii/rainbow/chomp）・
+    `LinePet`（chomp/ghost）+ `drawLinePets`・`blendThrough`。
+- **各 app の sill 消費パターン**（precedent・Track 2 の dedup 判断の前提）:
+  facet = full PaletteKit（`pal` global）/ perch = pure-Palette-twin / halo = Effects-only /
+  wand = Palette+Effects（string-token bridge）/ glance = PaletteKit（panel 面に最適合）。
+- **push ritual（全 app 共通）**: local は path-dep `../sill` で atomic 編集 → build green →
+  敵対レビュー（5-6 軸）→ host verify → **sill に新 API があれば tag/release** → app を
+  url+SemVer に swap → `Package.resolved` 再 pin → 単一 app PR（`Closes #N`）→ auto-merge。
+  ⚠️ **path-dep を `main` に残さない**（CI/brew が壊れる）。
+- **auto-merge ON**: facet/wand/perch/sill/halo/glance/chord の 7 repo
+  （CI 緑で自動 squash-merge）。
+- **CLT 制約**: 開発機は `swift build` のみ。`swift test`（XCTest）は **CI でしか走らない**＝
+  テストのコンパイルエラーは local で出ず CI のみ（防御的に書く）。
+- monorepo / submodule は**却下済**（各 app 独立 repo・sill は url+SemVer 依存）。
+
 ## 決定ログ（grill 結果）
 
 - **置き場 2極**: sill（code＋still）/ atelier（meta）。新 repo なし。
@@ -110,7 +140,10 @@ consumer の dedup には sill 側の小追加が先に要る。
 - **opt-in 収束**: 純粋な仕組み（canonical/suggest・canonicalLinePetNames・pet 警告）は family 全採用。
   見た目/依存が変わる物（perch `perchPillAlpha`、halo `EffectIntensity`）は**既定ローカル維持**、明示採用のみ。
 - **border 共通化**: phase 2 parking。
-- **doc 役割分担**: `sill-migration-handoff.md` = phase 1 / glance / push ritual（正本）、本ファイル = phase 1.5+。両者は補完・削除しない。
+- **doc 一本化（2026-06-12・旧「両者は補完・削除しない」を上書き）**: 本ファイルが唯一の
+  正典 tracker。`sill-migration-handoff.md` は phase 1 出荷完了（6/6）をもって退役・削除
+  （経緯は git 履歴と merged PR が保存。生きた ritual / 不変条件は §運用 ritual へ統合）。
+  権威状態も本ファイル＝repo が正（セッションメモリを正本とする mirror 運用は廃止）。
 - **scope guardrail（マンデート）**: 「zero-debt ≠ 全部共有」。Track 3 は **CI reusable ＋ CLAUDE.md のみ**（実重複）、**scripts 共通化は見送り**。TOML は同一 concern の正当 dedup として 1.6 で慎重に。
 - **バトン**: GitHub Projects #5（roadmap）＋ atelier issue で管理。
 
