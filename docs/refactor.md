@@ -137,6 +137,10 @@ Track 1〜4 でもそのまま使う durable な運用知識。
 - **CLT 制約**: 開発機は `swift build` のみ。`swift test`（XCTest）は **CI でしか走らない**＝
   テストのコンパイルエラーは local で出ず CI のみ（防御的に書く）。
 - monorepo / submodule は**却下済**（各 app 独立 repo・sill は url+SemVer 依存）。
+- **ユーザ live config の上書き ritual（2026-06-12・トミー許可）**: schema 変更の検証や
+  移行で、トミー実機の `~/.config/<app>/config.toml` を**上書きして良い**。条件は
+  **同一ディレクトリにバックアップを取ってから**（例: `config.toml.bak` / `config.toml.<日付>`）。
+  これで host verify 時に新 schema の config を直接置いて確認できる。
 
 ## 決定ログ（grill 結果）
 
@@ -151,6 +155,10 @@ Track 1〜4 でもそのまま使う durable な運用知識。
   （経緯は git 履歴と merged PR が保存。生きた ritual / 不変条件は §運用 ritual へ統合）。
   権威状態も本ファイル＝repo が正（セッションメモリを正本とする mirror 運用は廃止）。
 - **scope guardrail（マンデート）**: 「zero-debt ≠ 全部共有」。Track 3 は **CI reusable ＋ CLAUDE.md のみ**（実重複）、**scripts 共通化は見送り**。TOML は同一 concern の正当 dedup として 1.6 で慎重に。
+- **config 後方互換 不要（2026-06-12・トミー明示）**: config schema は**後方互換を気にせず破壊して良い**
+  （旧キー名 / 旧 pet 名 / 旧エイリアスの維持は不要）。→ Track 2 の pet 名検証・キー命名統一は
+  互換 shim を入れず素直に揃える。各 app の**出荷 config.toml は schema 変更に合わせて適宜更新**する
+  （リファクタの一部として同梱）。マンデート「破壊的変更/破棄 OK」の config 面への明文化。
 - **TOML 構造の参照スタイル = wand（2026-06-12・トミー）**: 直感は「省略よりは、個別に
   しっかり」。言語化すると — ① ネスト section で完全修飾・**1 block = 1 concern**
   （`[cast.overlay.trail]` 型。flat-prefix soup 禁止 — facet root 直下の `theme-cycle-seconds`
