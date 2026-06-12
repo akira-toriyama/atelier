@@ -49,7 +49,8 @@
 ## 2. block-8 glance — いま終わらせるべき作業
 
 **状態**: 実装 COMPLETE・`swift build` green・敵対レビュー済（blocker 1 修正済）。
-**glance `main` 上で local 編集・未 commit / 未 push / branch 未切り**。
+**glance repo の branch `refactor/sill-migration`（local commit `23c1d53`）・未 push**。
+（この atelier handoff も branch `docs/sill-migration-handoff` に local commit 済・未 push。）
 
 ### 2.1 確定設計（grill 結果・5問 AskUserQuestion）
 
