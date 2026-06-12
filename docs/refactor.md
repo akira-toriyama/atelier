@@ -24,18 +24,22 @@ drift-free な family 一貫性を作る横断リファクタの**正典 tracker
 
 | Phase | 状態 |
 |------|------|
-| **1. theme→sill 移行**（facet/perch/wand/halo + line-pets 汎用化） | ✅ 出荷済み（5/6） |
-| └ block-8 **glance**（最後の1枚） | 🔧 別所で進行中・もうすぐ出荷 |
-| **1.5. 仕上げ**（pin 衛生 / knob・pets dedup / meta 共通化） | ⬜ ← 本計画 |
+| **1. theme→sill 移行**（facet/perch/wand/halo/glance） | ✅ **完了・6/6 出荷（北極星到達）** |
+| **1.5. 仕上げ**（pin 衛生 / knob・pets dedup / meta 共通化） | 🔧 ← 本計画（着手中） |
 | **1.6. TOML 共通化**（4本→sill 1モジュール、golden test 駆動） | ⬜ 切り出し |
 | **2. border 共通化**（halo/facet/perch の BorderFX 統一） | 💤 parking（将来） |
 
 sill 現況: タグ 0.5.0。Palette（pure）/ PaletteKit（AppKit）/ Effects（pure＋AppKit
 animator・LinePet）/ still。EffectIntensity は 0.4.0、LinePet は 0.5.0 で着地。
 
+各 app の sill 採用（origin/main）: facet `0.5.0` / halo `0.5.0` / glance `0.5.0` ✅、
+**perch `0.3.0`**（[perch#114](https://github.com/akira-toriyama/perch/pull/114) で 0.5.0・host verify 待ち）/
+**wand `0.4.0`**（Track 2 の line-pets dedup と同時に bump）。← Track 0 の対象。
+
 ## Phase 1.5 計画
 
-依存順: **Track 0 → 1 → 2**、**Track 3（meta）は最初から並走**、**Track 4 は glance 出荷後**。
+glance 出荷で phase 1 完了。**Track 4 のゲートは外れた**（family review 着手可）。
+依存順: **Track 0 → 1 → 2**、**Track 3（meta）は最初から並走**。
 
 ### Track 0 — pin 衛生（最優先・rollout を解錠）
 - [ ] **perch**: `Package.swift` の `.upToNextMinor(from: "0.3.0")` を **`"0.5.0"` へ**。
