@@ -10,6 +10,7 @@ drift-free な family 一貫性を作る横断リファクタの**正典 tracker
 構造が app を跨いで揃っている状態。専用 workstream は立てず、Track 2 の**キー命名統一**＋
 phase 1.6 の **TOML parser 共通化**の積み上げで**結果的にそうなる**のが理想形
 （揃えるのは共通 concern のみ。app ドメイン固有の語彙＝死守リストは対象外）。
+**構造の参照スタイルは wand の config.toml**（決定ログ「TOML 構造の参照スタイル」参照）。
 
 > **このファイル = 唯一の正典 tracker**（バトンはここで受け渡す）。phase 1（theme→sill
 > 移行・glance 含む）の経緯は git 履歴と各 merged PR が記録。旧 `sill-migration-handoff.md`
@@ -150,6 +151,13 @@ Track 1〜4 でもそのまま使う durable な運用知識。
   （経緯は git 履歴と merged PR が保存。生きた ritual / 不変条件は §運用 ritual へ統合）。
   権威状態も本ファイル＝repo が正（セッションメモリを正本とする mirror 運用は廃止）。
 - **scope guardrail（マンデート）**: 「zero-debt ≠ 全部共有」。Track 3 は **CI reusable ＋ CLAUDE.md のみ**（実重複）、**scripts 共通化は見送り**。TOML は同一 concern の正当 dedup として 1.6 で慎重に。
+- **TOML 構造の参照スタイル = wand（2026-06-12・トミー）**: 直感は「省略よりは、個別に
+  しっかり」。言語化すると — ① ネスト section で完全修飾・**1 block = 1 concern**
+  （`[cast.overlay.trail]` 型。flat-prefix soup 禁止 — facet root 直下の `theme-cycle-seconds`
+  が反例）、② **既定値でも key を省略せずに書く**（commented-out で隠さない）、③ 値の規約を
+  統一（無効 = `"off"` / 継承 = `""` / 空 = `[]`）、④ inline table より**分解した個別 key**
+  （`action-type`＋`action-keys` 型）、⑤ 冒頭に schema 見取り図。Track 2 のキー命名統一と
+  phase 1.6 の共通 parser / 各 app config 整形の設計基準にする。
 - **バトン**: GitHub Projects #5（roadmap）＋ atelier issue で管理。
 
 ## 視覚差 watch list（review 必須）
